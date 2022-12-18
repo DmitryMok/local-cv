@@ -16,18 +16,20 @@
 
 
 ```yaml
-- weights: weights.pt
+- weights: VisBig_270922.pt
   classes:
     0: human
     1: car
+    2: truck
+    3: bike
   description: 'Модель для распознавания людей и автомобилей'
-  menu_name: 'Люди в лесу'
+  menu_name: 'Люди и автомобили'
   
   # необязательные параметры
   # пиктограммы в папке ./img, рекомендуемый размер 32px
-  picts: ['human.png', 'car.png']
+  picts: ['human.png', 'car.png', 'truck.png', 'bike.png']
   # цвет для рамки каждого класса
-  cmap: ['#d62728', '#2ca02c']
+  cmap: ['#d62728', '#2ca02c', '#1f77b4', '#9467bd']
 ```
 
 <p>Пример рабочего кода</p>
@@ -61,14 +63,14 @@ vis = Visualizer.Annotator()
 # вариант 1 - если пиктограммы были указаны в конфиге и уже загружены
 vis.setPicts(pict_files=det.models[0].picts)
 # вариант 2 - если не были указаны в конфиге, или надо изменить
-vis.setPicts(pict_files=['human.png', 'car.png'])
+vis.setPicts(pict_files=['human.png', 'car.png', 'truck.png', 'bike.png'])
 
 # тип разметки - bbox_types:
 # 1 - обычная рамка
 # 2 - окружность
 # 3 - скобки
 # picts - нарисовать иконку, conf_text - отобразить уверенность
-vis.drawDetections(image, res[:], bbox_type=1, lw=2, picts = True, conf_text = True)
+vis.drawDetections(image, res[:], bbox_type=3, lw=2, picts = True, conf_text = True)
 
 # выводим результат
 cv2.imshow('Image',image)
