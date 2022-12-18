@@ -41,7 +41,7 @@ import cv2
 import src.detector as Detector
 import src.visualizer as Visualizer
 
-# класс DetectorYolo содержит все необходимы методы для загрузки весов и распознавания
+# класс DetectorYolo содержит все необходимые методы для загрузки весов и распознавания
 det = Detector.DetectorYolo()
 
 # загружаем веса из папки weights. 
