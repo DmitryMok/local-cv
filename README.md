@@ -1,0 +1,72 @@
+# local-cv
+<h2>Распознавание и визуализация</h2>
+
+<h3>Структура папок проекта:</h3>
+корень
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|____ weights/
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|____ src/
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|____ img/
+
+
+
+
+<h3>Как использовать:</h3>
+
+<p>Создаем конфигурационный файл <b>.yaml<b>, сохраняем в папку <b>/weights<b></p>
+
+
+```yaml
+- weights: weights.pt
+  classes:
+    0: person
+    1: car
+  description: 'Модель для распознавания людей и автомобилей'
+  menu_name: 'Люди в лесу'
+  
+  # необязательные параметры
+  # пиктограммы в папке ./img, рекомендуемый размер 32px
+  picts: ['human.png', 'car.png']
+  # цвет для рамки каждого класса
+  cmap: ['#d62728', '#2ca02c']
+```
+
+<p>Пример рабочего кода</p>
+
+```python
+import cv2
+
+# загружаем модули из папки src
+import src.detector as Detector
+import src.visualizer as Visualizer
+
+# класс DetectorYolo содержит все необходимы методы для загрузки весов и распознавания
+det = Detector.DetectorYolo()
+
+# загружаем веса из папки ./weights. 
+# загруженная модель будет храниться в объекте det
+det.loadWeights('weights-test.yaml')
+
+# загружаем изображение для проверки обнаружения
+image = cv2.imread('weights/image.jpg')
+
+# делаем обнаружение, метод вернет numpy массив bounding box с абсолютными координатам углов x1y1-x2y2, уверенностью и класс объекта, см. пример
+# [[     314.13      542.76      354.79       641.6     0.90917           0]
+# [     118.47      608.15      161.96      702.94     0.86808           0]]
+res = det.getDetect(image)
+
+# класс Annotator служит для разметки изображений
+vis = Visualizer.Annotator()
+vis.setPicts(pict_files=['human_32.png'])
+
+# тип разметки - bbox_types:
+# 1 - обычная рамка
+# 2 - окружность
+# 3 - скобки
+# picts - нарисовать иконку, conf_text - отобразить уверенность
+vis.drawDetections(image, res[:], bbox_type=1, lw=2, picts = True, conf_text = True)
+
+# выводим результат
+cv2.imshow('Image',image)
+
+cv2.waitKey(0)
+```
