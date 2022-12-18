@@ -18,7 +18,7 @@
 ```yaml
 - weights: weights.pt
   classes:
-    0: person
+    0: human
     1: car
   description: 'Модель для распознавания людей и автомобилей'
   menu_name: 'Люди в лесу'
@@ -42,7 +42,7 @@ import src.visualizer as Visualizer
 # класс DetectorYolo содержит все необходимы методы для загрузки весов и распознавания
 det = Detector.DetectorYolo()
 
-# загружаем веса из папки ./weights. 
+# загружаем веса из папки weights. 
 # загруженная модель будет храниться в объекте det
 det.loadWeights('weights-test.yaml')
 
@@ -56,7 +56,12 @@ res = det.getDetect(image)
 
 # класс Annotator служит для разметки изображений
 vis = Visualizer.Annotator()
-vis.setPicts(pict_files=['human_32.png'])
+
+# готовим пиктограммы (метод преобразует их в маску)
+# вариант 1 - если пиктограммы были указаны в конфиге и уже загружены
+vis.setPicts(pict_files=det.models[0].picts)
+# вариант 2 - если не были указаны в конфиге, или надо изменить
+vis.setPicts(pict_files=['human.png', 'car.png'])
 
 # тип разметки - bbox_types:
 # 1 - обычная рамка
