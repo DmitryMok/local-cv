@@ -44,6 +44,10 @@ import src.visualizer as Visualizer
 # класс DetectorYolo содержит все необходимые методы для загрузки весов и распознавания
 det = Detector.DetectorYolo()
 
+# загружаем веса из папки weights. 
+# загруженная модель будет храниться в объекте det
+det.loadWeights('weights-test.yaml')
+
 # класс Annotator служит для разметки изображений
 vis = Visualizer.Annotator()
 
@@ -52,10 +56,6 @@ vis = Visualizer.Annotator()
 vis.setPicts(pict_files=det.models[0].picts)
 # вариант 2 - если не были указаны в конфиге, или надо изменить
 vis.setPicts(pict_files=['human.png', 'car.png', 'truck.png', 'bike.png'])
-
-# загружаем веса из папки weights. 
-# загруженная модель будет храниться в объекте det
-det.loadWeights('weights-test.yaml')
 
 # загружаем изображение для проверки обнаружения
 image = cv2.imread('weights/image.jpg')
