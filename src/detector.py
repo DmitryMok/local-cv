@@ -14,7 +14,6 @@ class _Model:
         self.picts = []
         self.cmap = []
 
-
 class DetectorYolo:
     # класс для загрузки конфигурации и весов моделей
     def __init__(self):
@@ -59,8 +58,12 @@ class DetectorYolo:
         # парсер конфигурационного файла
         for k in read_data:
             # print(k.keys())
-            model = _Model(k['weights'], k['classes'], k['description'], k['menu_name'])
-            # print(k['name'])
+            try:
+                model = _Model(k['weights'], k['classes'], k['description'], k['menu_name'])
+            except:
+                print(f'Проверьте файл конфигурации {os.path.abspath(os.path.join(self.wdir, self.config_file))}')
+                # sys.exit()
+                return 'exit'
             if 'picts' in k.keys():
                 model.picts = k['picts']
             else:
@@ -72,18 +75,9 @@ class DetectorYolo:
                     model.cmap.append(tuple(int(h[i:i + 2], 16) for i in (4, 2, 0)))
                 else: model.cmap = []
             self.models.append(model)   # массив моделей
-
-        # self.weights = [k['name'] for k in read_data]
         self.config = read_data  # сохраняем, чтобы брать описание и т.п.
 
     # делаем распознавание (на вход изображение и индекс модели, возвращает массив с координатами рамок)
     def getDetect(self, image, model_index=0):
         res = self.models[model_index].model(image)
-        # print(self.class_filter)
-        # if len(self.class_filter[model_index]):
-        #     res = res[[torch.isin(res[...,4], self.class_filter[model_index])]]
-        # print('xywh1')
-        # print('xywh', res.xywh[0])
-        # print('xywh1')
         return res.xyxy[0].cpu().detach().numpy()
-        # return res.xyxy[0]

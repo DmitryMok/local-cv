@@ -58,6 +58,7 @@ class Annotator:
             cv2.polylines(self.im, [pts], False, color, self.lw)
             pts = np.array([[p2[0]-ow, p2[1]],[p2[0],p2[1]],[p2[0], p1[1]],[p2[0]-ow, p1[1]]])
             cv2.polylines(self.im, [pts], False, color, self.lw)
+        # вывод пиктограммы
         if self.picts:
             # выводим пиктограммы
             if self.pict_list:  # сначала обработать файлы пиктограмм функцией getPicts
@@ -69,6 +70,7 @@ class Annotator:
                     roi = self.im[-size_w + p1[1]:p1[1], -size_h + p1[0]:p1[0]]
                     roi[np.where(self.mask_list[cl])] = 0
                     roi += self.pict_list[cl]
+        # вывод текста уверенности
         if self.conf_text:
             label = str(round(box[-2]-0.05,2))    # вероятность
             self.sc = 4  # масштаб текста
