@@ -58,7 +58,7 @@ vis.setPicts(pict_files=det.models[0].picts)
 vis.setPicts(pict_files=['human.png', 'car.png', 'truck.png', 'bike.png'])
 
 # загружаем изображение для проверки обнаружения
-image = cv2.imread('weights/image.jpg')
+image = cv2.imread('img/image.jpg')
 
 # делаем обнаружение, метод вернет numpy массив bounding box с абсолютными координатам углов x1y1-x2y2, уверенностью и класс объекта, см. пример
 # [[     314.13      542.76      354.79       641.6     0.90917           0]
