@@ -1,0 +1,14 @@
+- weights: VisBig_270922.pt
+  classes:
+    0: human
+    1: car
+    2: truck
+    3: bike
+  description: 'Модель для распознавания людей и автомобилей'
+  menu_name: 'Люди и автомобили'
+  
+  # необязательные параметры
+  # пиктограммы в папке ./img, рекомендуемый размер 32px
+  picts: ['human.png', 'car.png', 'truck.png', 'bike.png']
+  # цвет для рамки каждого класса
+  cmap: ['#d62728', '#2ca02c', '#1f77b4', '#9467bd']
