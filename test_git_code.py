@@ -18,7 +18,7 @@ vis = Visualizer.Annotator()
 # вариант 1 - если пиктограммы были указаны в конфиге и уже загружены
 vis.setPicts(pict_files=det.models[0].picts)
 # вариант 2 - если не были указаны в конфиге, или надо изменить
-vis.setPicts(pict_files=['human.png', 'car.png', 'truck.png', 'bike.png'])
+image = vis.setPicts(pict_files=['human.png', 'car.png', 'truck.png', 'bike.png'])
 
 # загружаем изображение для проверки обнаружения
 image = cv2.imread('img/image.jpg')
