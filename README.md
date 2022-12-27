@@ -70,7 +70,7 @@ res = det.getDetect(image)
 # 2 - окружность
 # 3 - скобки
 # picts - нарисовать иконку, conf_text - отобразить уверенность
-vis.drawDetections(image, res[:], bbox_type=3, lw=2, picts = True, conf_text = True)
+image = vis.drawDetections(image, res[:], bbox_type=3, lw=2, picts = True, conf_text = True)
 
 # выводим результат
 cv2.imshow('Image',image)
